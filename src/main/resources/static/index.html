@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Learning Tracker</title>
+
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="page">
+    <div class="big-box">
+
+      <h1>Student Learning Tracker</h1>
+
+    
+      <div class="row">
+        <input type="text" id="subjectInput" placeholder="Enter Subject Name">
+        <button id="addSubjectBtn">Add Subject</button>
+      </div>
+
+      
+      <ul id="subjectList"></ul>
+
+      
+      <div id="logsSection" class="logs hidden">
+        <h2 id="selectedSubjectTitle"></h2>
+
+        <div class="row">
+          <input type="text" id="logInput" placeholder="What did you study today?">
+          <button id="addLogBtn">Add Log</button>
+        </div>
+
+        <ul id="logList"></ul>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
