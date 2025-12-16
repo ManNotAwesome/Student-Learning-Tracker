@@ -1,6 +1,4 @@
-/**************************************
- * CONNECT JS TO HTML
- **************************************/
+
 const subjectInput = document.getElementById("subjectInput");
 const addSubjectBtn = document.getElementById("addSubjectBtn");
 const subjectList = document.getElementById("subjectList");
@@ -26,7 +24,7 @@ function getDayLabel(dateStr) {
     const logDate = new Date(dateStr);
     const today = new Date();
 
-    // Remove time part for fair comparison
+  
     logDate.setHours(0,0,0,0);
     today.setHours(0,0,0,0);
 
@@ -38,17 +36,12 @@ function getDayLabel(dateStr) {
     return formatDate(dateStr);
 }
 
-/**************************************
- * LOAD SUBJECTS ON PAGE LOAD
- **************************************/
+
 window.onload = function () {
     fetchAllSubjects();
 };
 
 
-/**************************************
- * ADD SUBJECT BUTTON CLICK
- **************************************/
 addSubjectBtn.addEventListener("click", function () {
 
     const subjectName = subjectInput.value.trim();
@@ -62,9 +55,8 @@ addSubjectBtn.addEventListener("click", function () {
 });
 
 
-/**************************************
- * ADD SUBJECT → BACKEND
- **************************************/
+
+
 function addSubjectToBackend(name) {
 
     fetch("/subjects", {
@@ -85,9 +77,7 @@ function addSubjectToBackend(name) {
 }
 
 
-/**************************************
- * FETCH ALL SUBJECTS
- **************************************/
+
 function fetchAllSubjects() {
 
     fetch("/subjects")
@@ -102,9 +92,7 @@ function fetchAllSubjects() {
 }
 
 
-/**************************************
- * SHOW SUBJECT IN UI
- **************************************/
+
 function addSubjectToUI(subject) {
 
     const li = document.createElement("li");
@@ -112,7 +100,7 @@ function addSubjectToUI(subject) {
     const span = document.createElement("span");
     span.textContent = subject.name;
 
-    // Click subject → select it (needed for logs later)
+   
     span.addEventListener("click", function () {
         selectSubject(subject);
     });
@@ -122,7 +110,7 @@ function addSubjectToUI(subject) {
     deleteBtn.style.marginLeft = "10px";
 
     deleteBtn.addEventListener("click", function (e) {
-        e.stopPropagation(); // VERY IMPORTANT
+        e.stopPropagation(); 
         deleteSubject(subject.id, li);
     });
 
@@ -132,9 +120,7 @@ function addSubjectToUI(subject) {
 }
 
 
-/**************************************
- * SELECT SUBJECT (PREP FOR LOGS)
- **************************************/
+
 function selectSubject(subject) {
     selectedSubjectId = subject.id;
     selectedSubjectTitle.textContent = "Logs for: " + subject.name;
@@ -142,9 +128,6 @@ function selectSubject(subject) {
 }
 
 
-/**************************************
- * DELETE SUBJECT
- **************************************/
 function deleteSubject(subjectId, listItem) {
 
     fetch(`/subjects/${subjectId}`, {
@@ -159,21 +142,7 @@ function deleteSubject(subjectId, listItem) {
         console.error("Error deleting subject:", error);
     });
 }
-/**************************************
- * STUDY LOGS SECTION
- **************************************/
 
-/*
- * When a subject is selected:
- * - selectedSubjectId is set
- * - logs section is shown
- * - logs are fetched
- */
-
-
-/**************************************
- * FETCH STUDY LOGS FOR SUBJECT
- **************************************/
 function fetchLogs() {
 
     if (selectedSubjectId === null) return;
@@ -182,7 +151,7 @@ function fetchLogs() {
         .then(response => response.json())
         .then(logs => {
 
-            // SORT BY DATE (newest first)
+            
             logs.sort((a, b) => {
                 return new Date(b.studyDate) - new Date(a.studyDate);
             });
@@ -196,9 +165,7 @@ function fetchLogs() {
 }
 
 
-/**************************************
- * ADD LOG BUTTON CLICK
- **************************************/
+
 addLogBtn.addEventListener("click", function () {
 
     if (selectedSubjectId === null) {
@@ -217,9 +184,7 @@ addLogBtn.addEventListener("click", function () {
 });
 
 
-/**************************************
- * ADD STUDY LOG → BACKEND
- **************************************/
+
 function addLogToBackend(description) {
 
     fetch(`/logs/${selectedSubjectId}?description=${encodeURIComponent(description)}`, {
@@ -236,9 +201,7 @@ function addLogToBackend(description) {
 }
 
 
-/**************************************
- * SHOW LOG IN UI
- **************************************/
+
 function addLogToUI(log) {
 
     const li = document.createElement("li");
@@ -267,9 +230,7 @@ function addLogToUI(log) {
 
 
 
-/**************************************
- * DELETE STUDY LOG
- **************************************/
+
 function deleteLog(logId, listItem) {
 
     fetch(`/logs/${logId}`, {
